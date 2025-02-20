@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: e-sales-payment
+  datasource:
+    url: jdbc:postgresql://localhost:5433/e_sales_payement
+    username: abdo
+    password: abdo654321
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+stripe:
+  secret:
+    key: ${secret_key}
+  public:
+    key: ${public_key}
+
+server:
+  port: 8080
