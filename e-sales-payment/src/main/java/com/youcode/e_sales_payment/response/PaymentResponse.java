@@ -7,12 +7,10 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class PaymentResponse {
-    private Long paymentId;
-    private String status;
+    private String paymentIntentId;
     private String clientSecret;
-    private LocalDateTime timestamp = LocalDateTime.now();
+    private String status;
+    private String commandeReference;
 }
 
