@@ -1,16 +1,18 @@
 package com.youcode.e_sales_payment.request;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class RefundRequest {
-    private Long paymentId;
-    private BigDecimal amount;
+    @NotNull
+    private String paymentIntentId;
+
+    @NotNull
+    @Positive
+    private Double amount;
+
+    @NotNull
     private String reason;
 }

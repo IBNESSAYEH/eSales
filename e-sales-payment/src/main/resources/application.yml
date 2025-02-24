@@ -1,6 +1,8 @@
 spring:
   application:
     name: e-sales-payment
+  config:
+    import: optional:configserver:http://localhost:8888
   datasource:
     url: jdbc:postgresql://localhost:5433/e_sales_payement
     username: abdo
@@ -8,7 +10,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
@@ -16,11 +18,22 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: true
+
 stripe:
-  secret:
-    key: ${secret_key}
+  api:
+    key: ${STRIPE_SECRET_KEY}
   public:
-    key: ${public_key}
+    key: ${STRIPE_PUBLIC_KEY}
+  webhook:
+    secret: ${STRIPE_WEBHOOK_SECRET:whsec_test}
 
 server:
   port: 8080

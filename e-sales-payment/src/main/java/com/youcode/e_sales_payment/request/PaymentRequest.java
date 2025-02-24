@@ -2,17 +2,22 @@ package com.youcode.e_sales_payment.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class PaymentRequest {
-    private BigDecimal amount;
-    private String paymentMethodId;
-    private int order;
-    private String currency = "EUR";
-    private String description;
+    @NotNull
+    @Positive
+    private Double amount;
+
+    @NotNull
+    private String currency;
+
+    @NotNull
+    private String paymentMethod;
+
+    @NotNull
+    private String orderReference;
 }
