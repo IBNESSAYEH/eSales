@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  postgresql:
+    container_name: ms_postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - microservices-net
+    restart: unless-stopped
+
+  mail-dev:
+    container_name: ms-mail-dev
+    image: maildev/maildev
+    ports:
+      - 1080:1080
+      - 1025:1025
+    networks:
+      - microservices-net
+
+  keycloak_web:
+    image: quay.io/keycloak/keycloak:23.0.2
+    container_name: keycloak_web
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://keycloakdb:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: 8081
+      KC_HOSTNAME_STRICT: 'false'
+      KC_HOSTNAME_STRICT_HTTPS: 'false'
+      KC_LOG_LEVEL: info
+      KC_METRICS_ENABLED: 'true'
+      KC_HEALTH_ENABLED: 'true'
+    command: start-dev
+    depends_on:
+      - keycloakdb
+    ports:
+      - '8080:8081'
+    networks:
+      - microservices-net
+
+  keycloakdb:
+    image: postgres:16
+    container_name: keycloakdb
+    volumes:
+      - keycloakdb:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+    networks:
+      - microservices-net
+    ports:
+      - '5433:5432'
+
+networks:
+  microservices-net:
+    driver: bridge
+
+volumes:
+  postgres:
+  keycloakdb:
