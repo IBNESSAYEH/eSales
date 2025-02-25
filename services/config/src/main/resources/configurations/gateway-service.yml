@@ -3,6 +3,17 @@ server:
 spring:
   cloud:
     gateway:
+      routes:
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/product/**
       discovery:
         locator:
-          enabled: true
+          enabled: false
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+

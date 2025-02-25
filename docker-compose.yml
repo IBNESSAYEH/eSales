@@ -33,22 +33,20 @@ services:
       KC_DB_URL: jdbc:postgresql://keycloakdb:5432/keycloak
       KC_DB_USERNAME: keycloak
       KC_DB_PASSWORD: keycloak
-
       KC_HOSTNAME: localhost
-      KC_HOSTNAME_PORT: 8080
+      KC_HOSTNAME_PORT: 8090
       KC_HOSTNAME_STRICT: false
       KC_HOSTNAME_STRICT_HTTPS: false
-
       KC_LOG_LEVEL: info
       KC_METRICS_ENABLED: true
       KC_HEALTH_ENABLED: true
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
-    command: start-dev
+      KEYCLOAK_ADMIN: test
+      KEYCLOAK_ADMIN_PASSWORD: test
+    command: start-dev --hostname=localhost
     depends_on:
       - keycloakdb
     ports:
-      - '8081:8080'
+      - '8090:8080'
     networks:
       - microservices-net
 
